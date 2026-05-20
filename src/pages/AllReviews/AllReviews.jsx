@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaHeart, FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import { Link, useLoaderData } from "react-router-dom";
+import useAxios from "../../hooks/useAxios";
 
 const AllReviews = () => {
-  const reviews = useLoaderData();
-  console.log(reviews);
+  const data = useLoaderData();
+  // console.log(reviews);
+  const axios = useAxios();
+
+  const [search, setsearch] = useState("");
+
+  const [reviews, setReviews] = useState(data);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        search ? `/reviews?search=${search}` : `/reviews`,
+      );
+      setReviews(res.data);
+    };
+    fetchData();
+  }, [search, axios]);
 
   return (
     <div className="bg-[#FFF8F0] min-h-screen py-12 px-4">
@@ -26,10 +42,12 @@ const AllReviews = () => {
         </div>
 
         {/* SEARCH BAR */}
-        <div className="flex justify-center mb-14">
+        <div className="flex text-black justify-center mb-14">
           <div className="w-full max-w-2xl">
             <input
               type="text"
+              value={search}
+              onChange={(e) => setsearch(e.target.value)}
               placeholder="Search food reviews..."
               className="w-full bg-white border border-gray-200 rounded-2xl px-6 py-4 outline-none focus:border-[#FF6B35] shadow-sm"
             />

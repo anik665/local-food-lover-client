@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import useAxios from "../../hooks/useAxios";
 
 const AddReview = () => {
@@ -10,8 +11,10 @@ const AddReview = () => {
     const rating = form.rating.value;
     const location = form.location.value;
     const review = form.review.value;
+    const restaurantName = form.restaurantName.value;
     const reviewsInfo = {
       foodName,
+      restaurantName,
       imgUrl,
       rating,
       location,
@@ -19,6 +22,13 @@ const AddReview = () => {
     };
     try {
       const res = await axios.post("/products", reviewsInfo);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your review has been saved",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -49,6 +59,21 @@ const AddReview = () => {
               type="text"
               name="foodName"
               placeholder="Enter food name"
+              className="w-full border border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
+              required
+            />
+          </div>
+          {/** Restaurant Name */}
+
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Restaurant Name
+            </label>
+
+            <input
+              type="text"
+              name="restaurantName"
+              placeholder="Enter restaurant name"
               className="w-full border border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
               required
             />
