@@ -11,6 +11,7 @@ import AuthProvider from "./Provider/AuthProvider.jsx";
 import AddReview from "./pages/AddReview/AddReview.jsx";
 import AllReviews from "./pages/AllReviews/AllReviews.jsx";
 import Error from "./pages/error/Error.jsx";
+import PrivateRoute from "./Private/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-review",
-        Component: AddReview,
+        element: (
+          <PrivateRoute>
+            <AddReview />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/register",

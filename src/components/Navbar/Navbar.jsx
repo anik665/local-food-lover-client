@@ -43,54 +43,52 @@ const Navbar = () => {
         </NavLink>
       </li>
 
-      {user && (
-        <>
-          <li>
-            <NavLink
-              to="/add-review"
-              className={({ isActive }) =>
-                `px-3 py-2 rounded-lg transition duration-300 ${
-                  isActive
-                    ? "bg-[#FF6B35] text-white"
-                    : "text-gray-700 hover:bg-orange-100 hover:text-[#FF6B35]"
-                }`
-              }
-            >
-              Add Review
-            </NavLink>
-          </li>
+      <>
+        <li>
+          <NavLink
+            to="/add-review"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-lg transition duration-300 ${
+                isActive
+                  ? "bg-[#FF6B35] text-white"
+                  : "text-gray-700 hover:bg-orange-100 hover:text-[#FF6B35]"
+              }`
+            }
+          >
+            Add Review
+          </NavLink>
+        </li>
 
-          <li>
-            <NavLink
-              to="/my-reviews"
-              className={({ isActive }) =>
-                `px-3 py-2 rounded-lg transition duration-300 ${
-                  isActive
-                    ? "bg-[#FF6B35] text-white"
-                    : "text-gray-700 hover:bg-orange-100 hover:text-[#FF6B35]"
-                }`
-              }
-            >
-              My Reviews
-            </NavLink>
-          </li>
+        <li>
+          <NavLink
+            to="/my-reviews"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-lg transition duration-300 ${
+                isActive
+                  ? "bg-[#FF6B35] text-white"
+                  : "text-gray-700 hover:bg-orange-100 hover:text-[#FF6B35]"
+              }`
+            }
+          >
+            My Reviews
+          </NavLink>
+        </li>
 
-          <li>
-            <NavLink
-              to="/favorites"
-              className={({ isActive }) =>
-                `px-3 py-2 rounded-lg transition duration-300 ${
-                  isActive
-                    ? "bg-[#FF6B35] text-white"
-                    : "text-gray-700 hover:bg-orange-100 hover:text-[#FF6B35]"
-                }`
-              }
-            >
-              Favorites
-            </NavLink>
-          </li>
-        </>
-      )}
+        <li>
+          <NavLink
+            to="/favorites"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-lg transition duration-300 ${
+                isActive
+                  ? "bg-[#FF6B35] text-white"
+                  : "text-gray-700 hover:bg-orange-100 hover:text-[#FF6B35]"
+              }`
+            }
+          >
+            Favorites
+          </NavLink>
+        </li>
+      </>
     </>
   );
 
