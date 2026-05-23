@@ -3,24 +3,41 @@ import useAxios from "../../hooks/useAxios";
 import { AuthContext } from "../../Provider/AuthContex";
 
 const MyReviewsUI = () => {
-  const [reviews, setReviews] = useState([]);
-  console.log(reviews);
-
   const axios = useAxios();
   const { user } = useContext(AuthContext);
 
+  const [reviews, setReviews] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+
   useEffect(() => {
+    if (!user?.email) return;
+
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`/my-reviews?email=${user.email}`);
-        setReviews(response.data);
-      } catch (er) {
-        console.log(er);
+        setLoading(true);
+
+        const { data } = await axios.get(`/my-reviews?email=${user.email}`);
+
+        setReviews(data || []);
+      } catch (err) {
+        console.log(err);
+        setReviews([]);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchReviews();
-  }, [user.email]);
+  }, [user?.email]);
+
+  // 🔥 Loading UI
+  if (isLoading) {
+    return (
+      <div className="p-6 text-center text-lg font-semibold">
+        Loading reviews...
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -47,31 +64,52 @@ const MyReviewsUI = () => {
           </thead>
 
           <tbody>
-            {reviews.map((review) => (
-              <tr key={review._id} className="border-b hover:bg-gray-50">
-                <td className="p-3">
-                  <img
-                    src={review.foodImgUrl}
-                    alt="food"
-                    className="w-14 h-14 rounded-lg object-cover"
-                  />
-                </td>
-
-                <td className="p-3 font-medium">{review.foodName}</td>
-                <td className="p-3">{review.restaurantName}</td>
-                <td className="p-3 text-gray-500">{review.reviewDate}</td>
-
-                <td className="p-3 text-center space-x-2">
-                  <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
-                    Edit
-                  </button>
-
-                  <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                    Delete
-                  </button>
+            {reviews.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center p-6 text-gray-500">
+                  No Reviews Found
                 </td>
               </tr>
-            ))}
+            ) : (
+              reviews.map((review) => (
+                <tr key={review._id} className="border-b hover:bg-gray-50">
+                  {/* Image */}
+                  <td className="p-3">
+                    <img
+                      src={review.imgUrl}
+                      alt="food"
+                      className="w-14 h-14 rounded-lg object-cover"
+                    />
+                  </td>
+
+                  {/* Food Name */}
+                  <td className="p-3 text-black font-medium">
+                    {review.foodName}
+                  </td>
+
+                  {/* Restaurant / Location */}
+                  <td className="p-3 text-gray-600 ">
+                    {review.restaurantName || review.location}
+                  </td>
+
+                  {/* Date */}
+                  <td className="p-3 text-gray-500">
+                    {new Date(review.createdAt).toLocaleDateString()}
+                  </td>
+
+                  {/* Actions */}
+                  <td className="p-3 text-center space-x-2">
+                    <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                      Edit
+                    </button>
+
+                    <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
