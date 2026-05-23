@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import useAxios from "../../hooks/useAxios";
+import { AuthContext } from "../../Provider/AuthContex";
 
 const MyReviewsUI = () => {
+  const [reviews, setReviews] = useState([]);
+  console.log(reviews);
+
+  const axios = useAxios();
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`/my-reviews?email=${user.email}`);
+        setReviews(response.data);
+      } catch (er) {
+        console.log(er);
+      }
+    };
+
+    fetchReviews();
+  }, [user.email]);
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Header */}
@@ -26,32 +47,31 @@ const MyReviewsUI = () => {
           </thead>
 
           <tbody>
-            {/* Dummy Row */}
-            <tr className="border-b hover:bg-gray-50">
-              <td className="p-3">
-                <img
-                  src="https://via.placeholder.com/60"
-                  alt="food"
-                  className="w-14 h-14 rounded-lg object-cover"
-                />
-              </td>
+            {reviews.map((review) => (
+              <tr key={review._id} className="border-b hover:bg-gray-50">
+                <td className="p-3">
+                  <img
+                    src={review.foodImgUrl}
+                    alt="food"
+                    className="w-14 h-14 rounded-lg object-cover"
+                  />
+                </td>
 
-              <td className="p-3 font-medium">Burger</td>
-              <td className="p-3">KFC Restaurant</td>
-              <td className="p-3 text-gray-500">2026-05-23</td>
+                <td className="p-3 font-medium">{review.foodName}</td>
+                <td className="p-3">{review.restaurantName}</td>
+                <td className="p-3 text-gray-500">{review.reviewDate}</td>
 
-              <td className="p-3 text-center space-x-2">
-                <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
-                  Edit
-                </button>
+                <td className="p-3 text-center space-x-2">
+                  <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                    Edit
+                  </button>
 
-                <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            {/* You can map your data here */}
+                  <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

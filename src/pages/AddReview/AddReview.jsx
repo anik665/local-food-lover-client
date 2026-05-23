@@ -1,8 +1,11 @@
 import Swal from "sweetalert2";
 import useAxios from "../../hooks/useAxios";
+import { AuthContext } from "../../Provider/AuthContex";
+import { useContext } from "react";
 
 const AddReview = () => {
   const axios = useAxios();
+  const { user } = useContext(AuthContext);
   const handelSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -20,6 +23,7 @@ const AddReview = () => {
       location,
       review,
       createdAt: new Date().toLocaleString(),
+      userEmail: user.email,
     };
     try {
       const res = await axios.post("/products", reviewsInfo);
