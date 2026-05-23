@@ -19,6 +19,7 @@ const AddReview = () => {
       rating,
       location,
       review,
+      createdAt: new Date().toLocaleString(),
     };
     try {
       const res = await axios.post("/products", reviewsInfo);

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaUtensils } from "react-icons/fa";
+import { AuthContext } from "../../Provider/AuthContex";
 
 const Login = () => {
+  const { user, signInWithGoogle } = useContext(AuthContext);
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -16,7 +19,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    console.log("Google Login");
+    signInWithGoogle();
   };
 
   return (

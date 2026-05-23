@@ -8,8 +8,11 @@ const Navbar = () => {
 
   // Firebase user later
 
-  const { user } = useContext(AuthContext);
+  const { user, signOuts } = useContext(AuthContext);
   console.log(user);
+  const handelsignOut = () => {
+    signOuts();
+  };
 
   const links = (
     <>
@@ -129,7 +132,10 @@ const Navbar = () => {
                 src="https://i.ibb.co/4pDNDk1/avatar.png"
                 alt=""
               />
-              <Link className="px-5 py-2 rounded-xl bg-[#FF6B35] text-white hover:bg-[#e85d2d] transition">
+              <Link
+                onClick={handelsignOut}
+                className="px-5 py-2 rounded-xl bg-[#FF6B35] text-white hover:bg-[#e85d2d] transition"
+              >
                 {" "}
                 logout
               </Link>

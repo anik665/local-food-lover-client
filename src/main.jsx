@@ -12,6 +12,8 @@ import AddReview from "./pages/AddReview/AddReview.jsx";
 import AllReviews from "./pages/AllReviews/AllReviews.jsx";
 import Error from "./pages/error/Error.jsx";
 import PrivateRoute from "./Private/PrivateRoute.jsx";
+import Favorits from "./pages/Favorits/Favorits.jsx";
+import MyReviewsUI from "./pages/my-reviews/MyReviews.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,23 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddReview />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/favorites",
+        element: (
+          <PrivateRoute>
+            <Favorits />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-reviews",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <MyReviewsUI />{" "}
           </PrivateRoute>
         ),
       },
