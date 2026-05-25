@@ -20,7 +20,7 @@ const AllReviews = () => {
       setReviews(res.data);
     };
     fetchData();
-  }, [search, axios]);
+  }, [search]);
 
   return (
     <div className="bg-[#FFF8F0] min-h-screen py-12 px-4">
