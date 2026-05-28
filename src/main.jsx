@@ -14,6 +14,7 @@ import Error from "./pages/error/Error.jsx";
 import PrivateRoute from "./Private/PrivateRoute.jsx";
 import Favorits from "./pages/Favorits/Favorits.jsx";
 import MyReviewsUI from "./pages/my-reviews/MyReviews.jsx";
+import ProfilePage from "./pages/profiles/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,15 @@ const router = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <MyReviewsUI />{" "}
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ProfilePage />{" "}
           </PrivateRoute>
         ),
       },

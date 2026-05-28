@@ -1,11 +1,15 @@
-import React, { use, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaUtensils } from "react-icons/fa";
 import { AuthContext } from "../../Provider/AuthContex";
+import Swal from "sweetalert2";
 
 const Register = () => {
-  const { signInWithGoogle } = useContext(AuthContext);
+  const { signInWithGoogle, createUser, UpdateProfiles } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -17,19 +21,56 @@ const Register = () => {
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
 
-    console.log({
-      name,
-      photo,
-      email,
-      password,
-      confirmPassword,
-    });
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Passwords do not match",
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+      return;
+    }
+    createUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        return UpdateProfiles({
+          displayName: name,
+          photoURL: photo,
+        });
+      })
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Registration successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        navigate("/");
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: " Oops ...",
+          text: err.message,
+        });
+      });
   };
 
   const handleGoogleSignup = () => {
     signInWithGoogle()
       .then((res) => {
         console.log(res.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Registration successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
       })
       .catch((err) => console.log(err.code));
     console.log("Google Signup");
@@ -113,7 +154,7 @@ const Register = () => {
                 type="text"
                 name="name"
                 placeholder="Enter your name"
-                className="w-full border border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
+                className="w-full border text-black border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
                 required
               />
             </div>
@@ -128,7 +169,7 @@ const Register = () => {
                 type="text"
                 name="photo"
                 placeholder="Enter photo URL"
-                className="w-full border border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
+                className="w-full border text-black border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
                 required
               />
             </div>
@@ -143,7 +184,7 @@ const Register = () => {
                 type="email"
                 name="email"
                 placeholder="Enter your email"
-                className="w-full border border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
+                className="w-full border text-black border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
                 required
               />
             </div>
@@ -158,7 +199,7 @@ const Register = () => {
                 type="password"
                 name="password"
                 placeholder="Enter password"
-                className="w-full border border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
+                className="w-full border text-black border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
                 required
               />
             </div>
@@ -173,7 +214,7 @@ const Register = () => {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm password"
-                className="w-full border border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
+                className="w-full border text-black border-gray-300 rounded-2xl px-4 py-3 outline-none focus:border-[#FF6B35]"
                 required
               />
             </div>
