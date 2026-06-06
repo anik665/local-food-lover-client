@@ -15,6 +15,7 @@ import PrivateRoute from "./Private/PrivateRoute.jsx";
 import Favorits from "./pages/Favorits/Favorits.jsx";
 import MyReviewsUI from "./pages/my-reviews/MyReviews.jsx";
 import ProfilePage from "./pages/profiles/ProfilePage.jsx";
+import CardDetails from "./components/card/CardDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,17 @@ const router = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <MyReviewsUI />{" "}
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: "/cardDetails/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/products/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <CardDetails />
           </PrivateRoute>
         ),
       },

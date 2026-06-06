@@ -122,7 +122,9 @@ const Register = () => {
           {/* GOOGLE BUTTON */}
           <button
             onClick={handleGoogleSignup}
-            className=" btn w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-800 py-3 rounded-2xl"
+            className=" btn w-full bg-white border px-4  border-gray-300 hover:bg-gray-100 
+            
+             text-gray-800 py-4 rounded-2xl"
           >
             <svg
               aria-label="Google logo"

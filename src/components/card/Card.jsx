@@ -15,6 +15,10 @@ const Card = ({ item }) => {
       email: user.email,
     });
   };
+  const cardDEtails = (id) => {
+    console.log("card details clicked");
+    axios.get(`/products/${id}`);
+  };
 
   return (
     <div>
@@ -92,7 +96,8 @@ const Card = ({ item }) => {
 
           {/* BUTTON */}
           <Link
-            to="/"
+            onClick={() => cardDEtails(item._id)}
+            to={`/cardDetails/${item._id}`}
             className="block text-center bg-[#FF6B35] hover:bg-[#e85d2d] text-white py-3 rounded-2xl font-semibold transition duration-300"
           >
             View Details
